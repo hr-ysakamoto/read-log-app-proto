@@ -5,7 +5,9 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "api": "pnpm -F \"api\"",
+    "web": "pnpm -F \"web\""
   },
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
