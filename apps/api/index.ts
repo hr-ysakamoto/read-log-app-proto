@@ -12,6 +12,13 @@ import {
 } from "fastify-type-provider-zod";
 import { UserInputSchema, UserOutputSchema } from "@repo/models/types";
 import { Server, IncomingMessage, ServerResponse } from "node:http";
+import _aspida from "openapi2aspida";
+import cors from "./lib/cors";
+
+export type AspidaOptions = Exclude<
+  Parameters<typeof _aspida>[0],
+  string | undefined
+>;
 
 export type FastifyZodInstance = FastifyInstance<
   Server<typeof IncomingMessage, typeof ServerResponse>,
@@ -49,6 +56,8 @@ const main = async (app: FastifyZodInstance) => {
       routePrefix: "/documentation",
     });
 
+    await app.register(cors);
+
     app.after(() => {
       app.withTypeProvider<ZodTypeProvider>().route({
         method: "GET",
@@ -59,25 +68,47 @@ const main = async (app: FastifyZodInstance) => {
             200: UserOutputSchema,
           },
         },
-        handler: (req, res) => {
-          console.log({ id: req.query.userId });
+        handler: (_, res) => {
+          console.log("GET /user received");
           res.send({ userName: "John Doe" });
         },
       });
     });
-    await app.ready();
-    const swaggerJson = app
-      .withTypeProvider<ZodTypeProvider>()
-      .swagger({ yaml: false });
 
+    await app.ready();
     const yaml = app.swagger({ yaml: true });
     const openApiDir = path.resolve(__dirname, "../../packages/models/api");
     const swaggerYamlPath = `${openApiDir}/swagger.yaml` as const;
+    const aspidaTypeDir = `${openApiDir}/aspida` as const;
+
+    const aspidaOption: AspidaOptions & {
+      input: string;
+    } = {
+      input: path.join(aspidaTypeDir, "client"),
+      openapi: {
+        inputFile: swaggerYamlPath,
+      },
+    };
+
     if (!fs.existsSync(openApiDir)) {
       fs.mkdirSync(openApiDir, { recursive: true });
     }
     fs.writeFileSync(swaggerYamlPath, yaml);
     console.log(`generated routed >>> ${swaggerYamlPath}`);
+
+    if (!fs.existsSync(aspidaTypeDir)) {
+      fs.mkdirSync(aspidaTypeDir);
+    }
+
+    if (fs.existsSync(aspidaOption.input)) {
+      fs.rmSync(aspidaOption.input, {
+        recursive: true,
+        force: true,
+      });
+    }
+
+    await _aspida(aspidaOption);
+    console.log(`generated aspida settings >>> ${aspidaOption.input}`);
 
     await app.listen({ port, host });
     console.log(`Server listining on port ${port}`);
