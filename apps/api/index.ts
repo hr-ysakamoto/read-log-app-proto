@@ -10,10 +10,16 @@ import {
   validatorCompiler,
   jsonSchemaTransform,
 } from "fastify-type-provider-zod";
-import { UserInputSchema, UserOutputSchema } from "@repo/models/types";
+import {
+  UserInputSchema,
+  UserOutputSchema,
+  GetBookInputSchema,
+  GetBookOutputSchema,
+} from "@repo/models/types";
 import { Server, IncomingMessage, ServerResponse } from "node:http";
 import _aspida from "openapi2aspida";
 import cors from "./lib/cors";
+import { BookService } from "./services";
 
 export type AspidaOptions = Exclude<
   Parameters<typeof _aspida>[0],
@@ -43,7 +49,7 @@ const main = async (app: FastifyZodInstance) => {
     app.register(fastifySwagger, {
       openapi: {
         info: {
-          title: "Book Record API",
+          title: "Reading log & memo API",
           description: "Sample backend service",
           version: "1.0.0",
         },
@@ -69,8 +75,23 @@ const main = async (app: FastifyZodInstance) => {
           },
         },
         handler: (_, res) => {
-          console.log("GET /user received");
           res.send({ userName: "John Doe" });
+        },
+      });
+      app.withTypeProvider<ZodTypeProvider>().route({
+        method: "GET",
+        url: "/books",
+        schema: {
+          querystring: GetBookInputSchema,
+          response: {
+            200: GetBookOutputSchema,
+          },
+        },
+        handler: async (_, res) => {
+          const service = new BookService();
+          const response = await service.getBooks();
+          console.log({ response });
+          res.send(response);
         },
       });
     });
@@ -109,7 +130,6 @@ const main = async (app: FastifyZodInstance) => {
 
     await _aspida(aspidaOption);
     console.log(`generated aspida settings >>> ${aspidaOption.input}`);
-
     await app.listen({ port, host });
     console.log(`Server listining on port ${port}`);
   } catch (error) {
@@ -118,5 +138,4 @@ const main = async (app: FastifyZodInstance) => {
   }
 };
 
-export const app = fastifyApp();
-main(app);
+main(fastifyApp());
