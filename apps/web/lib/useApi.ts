@@ -6,7 +6,7 @@ export function useUser(): {
   userName: string | undefined;
   isLoading: boolean;
   isError: boolean;
-  mutate: () => KeyedMutator<any>;
+  mutate: KeyedMutator<any>;
 } {
   const query = { userId: "1" };
   const { data, error, isLoading, mutate } = useAspidaSWR(api.user, {

@@ -1,11 +1,8 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Providers } from "./providers";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Book Manager",
-  description: "Manage your books",
-};
+import "./globals.css";
+import { Providers } from "./providers";
+import { Box } from "@chakra-ui/react";
 
 export default function RootLayout({
   children,
@@ -15,7 +12,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Box m={25}>
+          <Providers>{children}</Providers>
+        </Box>
       </body>
     </html>
   );
