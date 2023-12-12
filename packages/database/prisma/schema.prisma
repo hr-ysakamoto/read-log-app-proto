@@ -15,6 +15,8 @@ model Book {
   thumbnail       String       @map("thumbnail")
   language        String       @map("language")
   readingStateId  Int          @map("reading_state_id")
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @default(now()) @map("updated_at")
   readingState    ReadingState @relation(fields: [readingStateId], references: [id])
   user            User         @relation(fields: [userId], references: [id])
 
@@ -24,19 +26,23 @@ model Book {
 }
 
 model User {
-  id    Int    @id @default(autoincrement()) @map("id")
-  name  String @map("name")
-  email String @unique @map("email")
-  Book  Book[]
+  id        Int      @id @default(autoincrement()) @map("id")
+  name      String   @map("name")
+  email     String   @unique @map("email")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  Book      Book[]
 
   @@map("users")
 }
 
 model ReadingState {
-  id      Int    @id @default(autoincrement()) @map("id")
-  name    String @map("name")
-  orderNo Int    @map("order_no")
-  Book    Book[]
+  id        Int      @id @default(autoincrement()) @map("id")
+  name      String   @map("name")
+  orderNo   Int      @map("order_no")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  Book      Book[]
 
   @@map("reading_states")
 }
