@@ -23,5 +23,8 @@
   },
   "volta": {
     "node": "20.10.0"
+  },
+  "dependencies": {
+    "@prisma/client": "5.7.0"
   }
 }

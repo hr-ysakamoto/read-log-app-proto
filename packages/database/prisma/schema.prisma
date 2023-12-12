@@ -1,11 +1,51 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+model Book {
+  id              Int          @id @default(autoincrement()) @map("id")
+  userId          Int          @map("user_id")
+  googleId        String       @map("google_id")
+  isbn            String       @map("isbn")
+  title           String       @map("title")
+  subtitle        String       @map("subtitle")
+  authors         String       @map("authors")
+  publicationDate String       @map("publication_date")
+  description     String       @map("description")
+  pageCount       Int          @map("page_count")
+  thumbnail       String       @map("thumbnail")
+  language        String       @map("language")
+  readingStateId  Int          @map("reading_state_id")
+  readingState    ReadingState @relation(fields: [readingStateId], references: [id])
+  user            User         @relation(fields: [userId], references: [id])
+
+  @@unique([id, userId])
+  @@index(isbn)
+  @@map("books")
+}
+
+model User {
+  id    Int    @id @default(autoincrement()) @map("id")
+  name  String @map("name")
+  email String @unique @map("email")
+  Book  Book[]
+
+  @@map("users")
+}
+
+model ReadingState {
+  id      Int    @id @default(autoincrement()) @map("id")
+  name    String @map("name")
+  orderNo Int    @map("order_no")
+  Book    Book[]
+
+  @@map("reading_states")
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }

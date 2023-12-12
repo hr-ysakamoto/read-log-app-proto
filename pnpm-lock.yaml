@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@prisma/client':
+        specifier: 5.7.0
+        version: 5.7.0(prisma@5.7.0)
     devDependencies:
       '@biomejs/biome':
         specifier: 1.4.1
@@ -197,6 +201,12 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
+
+  packages/database:
+    dependencies:
+      '@prisma/client':
+        specifier: 5.7.0
+        version: 5.7.0(prisma@5.7.0)
 
   packages/eslint-config:
     devDependencies:
@@ -1342,13 +1352,24 @@ packages:
       tslib: 2.6.2
     dev: true
 
+  /@prisma/client@5.7.0(prisma@5.7.0):
+    resolution: {integrity: sha512-cZmglCrfNbYpzUtz7HscVHl38e9CrUs31nrVoGUK1nIPXGgt8hT4jj2s657UXcNdQ/jBUxDgGmHyu2Nyrq1txg==}
+    engines: {node: '>=16.13'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      prisma: 5.7.0
+    dev: false
+
   /@prisma/debug@5.7.0:
     resolution: {integrity: sha512-tZ+MOjWlVvz1kOEhNYMa4QUGURY+kgOUBqLHYIV8jmCsMuvA1tWcn7qtIMLzYWCbDcQT4ZS8xDgK0R2gl6/0wA==}
-    dev: true
 
   /@prisma/engines-version@5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9:
     resolution: {integrity: sha512-V6tgRVi62jRwTm0Hglky3Scwjr/AKFBFtS+MdbsBr7UOuiu1TKLPc6xfPiyEN1+bYqjEtjxwGsHgahcJsd1rNg==}
-    dev: true
 
   /@prisma/engines@5.7.0:
     resolution: {integrity: sha512-TkOMgMm60n5YgEKPn9erIvFX2/QuWnl3GBo6yTRyZKk5O5KQertXiNnrYgSLy0SpsKmhovEPQb+D4l0SzyE7XA==}
@@ -1358,7 +1379,6 @@ packages:
       '@prisma/engines-version': 5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
       '@prisma/fetch-engine': 5.7.0
       '@prisma/get-platform': 5.7.0
-    dev: true
 
   /@prisma/fetch-engine@5.7.0:
     resolution: {integrity: sha512-zIn/qmO+N/3FYe7/L9o+yZseIU8ivh4NdPKSkQRIHfg2QVTVMnbhGoTcecbxfVubeTp+DjcbjS0H9fCuM4W04w==}
@@ -1366,13 +1386,11 @@ packages:
       '@prisma/debug': 5.7.0
       '@prisma/engines-version': 5.7.0-41.79fb5193cf0a8fdbef536e4b4a159cad677ab1b9
       '@prisma/get-platform': 5.7.0
-    dev: true
 
   /@prisma/get-platform@5.7.0:
     resolution: {integrity: sha512-ZeV/Op4bZsWXuw5Tg05WwRI8BlKiRFhsixPcAM+5BKYSiUZiMKIi713tfT3drBq8+T0E1arNZgYSA9QYcglWNA==}
     dependencies:
       '@prisma/debug': 5.7.0
-    dev: true
 
   /@rushstack/eslint-patch@1.5.1:
     resolution: {integrity: sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==}
@@ -6030,7 +6048,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 5.7.0
-    dev: true
 
   /process-warning@1.0.0:
     resolution: {integrity: sha512-du4wfLyj4yCZq1VupnVSZmRsPJsNuxoDQFdCFHLaYiEbFBD7QE0a+I4D7hOxrVnh78QE/YipFAj9lXHiXocV+Q==}
