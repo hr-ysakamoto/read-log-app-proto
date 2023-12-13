@@ -17,8 +17,8 @@ model Book {
   readingStateId  Int          @map("reading_state_id")
   createdAt       DateTime     @default(now()) @map("created_at")
   updatedAt       DateTime     @default(now()) @map("updated_at")
-  readingState    ReadingState @relation(fields: [readingStateId], references: [id])
-  user            User         @relation(fields: [userId], references: [id])
+  readingState    ReadingState @relation(fields: [readingStateId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  user            User         @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
 
   @@unique([id, userId])
   @@index(isbn)

@@ -223,11 +223,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/database:
-    dependencies:
-      '@prisma/client':
-        specifier: 5.7.0
-        version: 5.7.0(prisma@5.7.0)
+  packages/database: {}
 
   packages/eslint-config:
     devDependencies:

@@ -10,8 +10,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@prisma/client": "5.7.0"
-  }
+  "license": "ISC"
 }
