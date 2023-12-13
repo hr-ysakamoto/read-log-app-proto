@@ -1,22 +1,24 @@
 'use client'
-
 import {
   Card,
   Stack,
   Box,
-  Image,
   Grid,
   GridItem,
   Input,
   InputGroup,
   InputRightElement,
   Text,
-  Center,
 } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import React, { useState } from 'react'
 import { bookList, statusList } from '../lib/mocks'
-import { ViewToggleButton, ViewMode, OrderSelectBox } from '../components'
+import {
+  ViewToggleButton,
+  ViewMode,
+  OrderSelectBox,
+  CoverImage,
+} from '../components'
 
 export default function Page(): JSX.Element {
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
@@ -39,26 +41,13 @@ export default function Page(): JSX.Element {
         </GridItem>
       </Grid>
       {statusList.map((state, i) => (
-        <Card variant='outline' key={i} size='md'>
+        <Card variant='outline' key={`card-${i}`} size='md'>
           <Stack spacing='4' direction={'row'}>
             <Box w={120} p={2}>
               <Text fontSize='md'> {state.name}</Text>
             </Box>
             {bookList.map((book, j) => (
-              <Center
-                key={`box-${j}`}
-                bg='gray.100'
-                h='190px'
-                w='140px'
-                color='white'
-              >
-                <Image
-                  key={j}
-                  objectFit='cover'
-                  src={book.thumbnail}
-                  fit={'fill'}
-                />
-              </Center>
+              <CoverImage key={`cover-image-${j}`} imageUrl={book.thumbnail} />
             ))}
           </Stack>
         </Card>
