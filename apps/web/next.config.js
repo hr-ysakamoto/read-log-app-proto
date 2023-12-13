@@ -5,8 +5,8 @@ module.exports = {
    */
   reactStrictMode: true,
   trailingSlash: true,
-  transpilePackages: ["@repo/models"],
+  transpilePackages: ['@repo/models'],
   env: {
-    API_URL: "http://localhost:8000",
+    API_URL: 'http://localhost:8000',
   },
-};
+}
