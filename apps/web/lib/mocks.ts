@@ -23,7 +23,7 @@ export const bookList = [
     thumbnail:
       'http://books.google.com/books/content?id=17yjDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
   },
-]
+];
 
 export const statusList = [
   {
@@ -41,4 +41,4 @@ export const statusList = [
     name: '読み終わった',
     orderNo: 3,
   },
-]
+];

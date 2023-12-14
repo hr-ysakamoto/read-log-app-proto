@@ -1,7 +1,7 @@
-import aspida from '@aspida/axios'
-import axios, { CustomParamsSerializer } from 'axios'
-import factory from '@repo/models/api/aspida/client/$api'
-import { stringify } from 'qs'
+import aspida from '@aspida/axios';
+import axios, { CustomParamsSerializer } from 'axios';
+import factory from '@repo/models/api/aspida/client/$api';
+import { stringify } from 'qs';
 
 export const api = factory(
   aspida(axios, {
@@ -10,4 +10,4 @@ export const api = factory(
     },
     baseURL: 'http://localhost:8000',
   }),
-)
+);
