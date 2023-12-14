@@ -1,4 +1,4 @@
-import { GetBookOutput } from '@repo/models/types'
+import { GetBookOutput } from '@repo/models/types';
 
 export class BookService {
   public async getBooks(): Promise<GetBookOutput> {
@@ -14,9 +14,9 @@ export class BookService {
         thumbnailUrl: 'test',
         language: 'test',
       },
-    ]
+    ];
     return {
       books,
-    }
+    };
   }
 }
