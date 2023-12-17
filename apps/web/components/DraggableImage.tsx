@@ -5,6 +5,9 @@ import { CSS } from '@dnd-kit/utilities';
 import React from 'react';
 import { useStore } from '../lib/zustand';
 
+const H = 190;
+const W = 140;
+
 interface DraggableImageProps {
   id: UniqueIdentifier;
   show?: boolean;
@@ -32,7 +35,7 @@ export const DraggableImage = ({
     >
       {show || id !== draggingId ? (
         <Box id={String(id)} mx={2} style={style}>
-          <Center bg="gray.100" h="190px" w="140px" color="white">
+          <Center bg="gray.100" h={H} w={W} color="white">
             <Image objectFit="cover" src={imageUrl} fit="fill" />
           </Center>
         </Box>
@@ -40,8 +43,8 @@ export const DraggableImage = ({
         <Box
           id={String(id)}
           mx={2}
-          h="190px"
-          w="140px"
+          h={H}
+          w={W}
           borderWidth="1px"
           borderColor="gray.200"
         />
