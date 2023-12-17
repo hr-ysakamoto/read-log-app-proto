@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { ToZod } from '../lib/zod';
 
 export type Book = {
+  readingStateId: number;
   isbn: string;
   googleBookId: string;
   title: string;
@@ -29,6 +30,7 @@ export type GetBookOutput = {
 export const GetBookOutputSchema = z.object<ToZod<GetBookOutput>>({
   books: z.array(
     z.object<ToZod<Book>>({
+      readingStateId: z.number(),
       isbn: z.string(),
       googleBookId: z.string(),
       title: z.string(),
