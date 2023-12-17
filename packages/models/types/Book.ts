@@ -1,30 +1,30 @@
-import { z } from 'zod'
-import { ToZod } from '../lib/zod'
+import { z } from 'zod';
+import { ToZod } from '../lib/zod';
 
 export type Book = {
-  isbn: string
-  googleBookId: string
-  title: string
-  subtitle?: string
-  authors: string[]
-  publicationDate: string
-  description: string
-  pageCount: number
-  thumbnailUrl: string
-  language: string
-}
+  isbn: string;
+  googleBookId: string;
+  title: string;
+  subtitle?: string;
+  authors: string[];
+  publicationDate: string;
+  description: string;
+  pageCount: number;
+  thumbnailUrl: string;
+  language: string;
+};
 
 export type GetBookInput = {
-  userId: string
-}
+  userId: string;
+};
 
 export const GetBookInputSchema = z.object<ToZod<GetBookInput>>({
   userId: z.string().regex(/\d+/),
-})
+});
 
 export type GetBookOutput = {
-  books: Book[]
-}
+  books: Book[];
+};
 
 export const GetBookOutputSchema = z.object<ToZod<GetBookOutput>>({
   books: z.array(
@@ -41,4 +41,4 @@ export const GetBookOutputSchema = z.object<ToZod<GetBookOutput>>({
       language: z.string(),
     }),
   ),
-})
+});
