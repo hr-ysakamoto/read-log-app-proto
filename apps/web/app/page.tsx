@@ -25,7 +25,7 @@ import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
 import React, { useId, useState } from 'react';
 import {
-  CoverImage,
+  DraggableImage,
   OrderSelectBox,
   ViewMode,
   ViewToggleButton,
@@ -34,12 +34,15 @@ import { SortableContainer } from '../components/SortableContainer';
 import { Container } from '../lib';
 import { containers as containerList } from '../lib/mocks';
 
+type DraggingItem = {
+  id: UniqueIdentifier;
+  url: string;
+};
+
 export default function Page(): JSX.Element {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [containers, setContainers] = useState<Container[]>(containerList);
-
-  const [activeId, setActiveId] = useState<UniqueIdentifier>();
-  const [activeUrl, setActiveUrl] = useState<string>();
+  const [draggingItem, setDraggingItem] = useState<DraggingItem>();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -57,16 +60,22 @@ export default function Page(): JSX.Element {
     });
   };
 
+  const getUrl = (id: UniqueIdentifier): string | undefined => {
+    const targetContainer = containers.find(x => x.id === id);
+    if (targetContainer) return undefined;
+
+    return containers
+      .find(container => {
+        return container.books.some(book => book.id === id);
+      })
+      ?.books.find(book => book.id === id)?.thumbnail;
+  };
+
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
     const id = active.id.toString();
-    setActiveId(id);
-    containers.flatMap(container => {
-      const book = container.books.find(book => book.id === id);
-      if (book) {
-        setActiveUrl(book.thumbnail);
-      }
-    });
+    const url = getUrl(id) || '';
+    setDraggingItem({ id, url });
   };
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -130,10 +139,8 @@ export default function Page(): JSX.Element {
     const { active, over } = event;
     const id = active.id.toString();
     const overId = over?.id;
-
     if (!overId) return;
 
-    // ドラッグ、ドロップ時のコンテナ取得
     const activeContainer = findContainer(id);
     const overContainer = findContainer(overId);
 
@@ -144,7 +151,6 @@ export default function Page(): JSX.Element {
       return;
     }
 
-    // 配列のインデックス取得
     const activeIndex = activeContainer.books.findIndex(x => x.id === id);
     const overIndex = overContainer.books.findIndex(x => x.id === overId);
 
@@ -160,7 +166,7 @@ export default function Page(): JSX.Element {
       });
       setContainers(newContainers);
     }
-    setActiveId(undefined);
+    setDraggingItem(undefined);
   };
   const id = useId();
 
@@ -200,8 +206,8 @@ export default function Page(): JSX.Element {
         ))}
       </Stack>
       <DragOverlay>
-        {activeId ? (
-          <CoverImage id={activeId} imageUrl={activeUrl ?? ''} />
+        {draggingItem ? (
+          <DraggableImage id={draggingItem.id} imageUrl={draggingItem.url} />
         ) : null}
       </DragOverlay>
     </DndContext>
