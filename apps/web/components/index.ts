@@ -1,4 +1,5 @@
-export * from './ViewToggleButton';
+export * from './DraggableImage';
 export * from './OrderSelectBox';
-export * from './CoverImage';
 export * from './SortableContainer';
+export * from './SortableRowStack';
+export * from './ViewToggleButton';

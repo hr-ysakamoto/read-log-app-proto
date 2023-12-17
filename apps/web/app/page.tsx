@@ -33,6 +33,7 @@ import {
 import { SortableContainer } from '../components/SortableContainer';
 import { Container } from '../lib';
 import { containers as containerList } from '../lib/mocks';
+import { useStore } from '../lib/zustand';
 
 type DraggingItem = {
   id: UniqueIdentifier;
@@ -40,6 +41,8 @@ type DraggingItem = {
 };
 
 export default function Page(): JSX.Element {
+  const setDraggingItemId = useStore(state => state.setDraggingItem);
+
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [containers, setContainers] = useState<Container[]>(containerList);
   const [draggingItem, setDraggingItem] = useState<DraggingItem>();
@@ -76,6 +79,7 @@ export default function Page(): JSX.Element {
     const id = active.id.toString();
     const url = getUrl(id) || '';
     setDraggingItem({ id, url });
+    setDraggingItemId(id);
   };
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -167,6 +171,7 @@ export default function Page(): JSX.Element {
       setContainers(newContainers);
     }
     setDraggingItem(undefined);
+    setDraggingItemId(null);
   };
   const id = useId();
 
@@ -207,7 +212,12 @@ export default function Page(): JSX.Element {
       </Stack>
       <DragOverlay>
         {draggingItem ? (
-          <DraggableImage id={draggingItem.id} imageUrl={draggingItem.url} />
+          <DraggableImage
+            show={true}
+            id={draggingItem.id}
+            imageUrl={draggingItem.url}
+            style={{ boxShadow: '10px 10px 15px -10px' }}
+          />
         ) : null}
       </DragOverlay>
     </DndContext>
