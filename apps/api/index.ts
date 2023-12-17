@@ -114,6 +114,7 @@ const main = async (app: FastifyZodInstance) => {
       fs.mkdirSync(openApiDir, { recursive: true });
     }
     fs.writeFileSync(swaggerYamlPath, yaml);
+    // biome-ignore lint: no-console
     console.log(`generated routed >>> ${swaggerYamlPath}`);
 
     if (!fs.existsSync(aspidaTypeDir)) {
@@ -128,8 +129,10 @@ const main = async (app: FastifyZodInstance) => {
     }
 
     await _aspida(aspidaOption);
+    // biome-ignore lint: no-console
     console.log(`generated aspida settings >>> ${aspidaOption.input}`);
     await app.listen({ port, host });
+    // biome-ignore lint: no-console
     console.log(`Server listining on port ${port}`);
   } catch (error) {
     console.error(error);
