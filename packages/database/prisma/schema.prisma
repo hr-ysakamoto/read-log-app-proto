@@ -4,6 +4,8 @@
 model Book {
   id              Int          @id @default(autoincrement()) @map("id")
   userId          Int          @map("user_id")
+  readingStateId  Int          @map("reading_state_id")
+  orderNo         Int          @map("order_no")
   googleId        String       @map("google_id")
   isbn            String       @map("isbn")
   title           String       @map("title")
@@ -14,7 +16,6 @@ model Book {
   pageCount       Int          @map("page_count")
   thumbnail       String       @map("thumbnail")
   language        String       @map("language")
-  readingStateId  Int          @map("reading_state_id")
   createdAt       DateTime     @default(now()) @map("created_at")
   updatedAt       DateTime     @default(now()) @map("updated_at")
   readingState    ReadingState @relation(fields: [readingStateId], references: [id], onDelete: Restrict, onUpdate: Restrict)
