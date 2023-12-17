@@ -27,20 +27,18 @@ export const SortableContainer = ({
     <Card variant="outline" size="md">
       <Stack spacing="4" direction={'row'}>
         <Box minH={190} w={120} p={2}>
-          <Text fontSize="md"> {stateName}</Text>
+          <Text fontSize="md">{stateName}</Text>
         </Box>
         <SortableContext id={id} items={items} strategy={rectSortingStrategy}>
-          <div ref={setNodeRef} style={{ width: '100%' }}>
-            <Stack spacing="4" direction={'row'}>
-              {items.map((book, j) => (
-                <CoverImage
-                  id={book.id}
-                  key={`${book.id}-${j}`}
-                  imageUrl={book.thumbnail}
-                />
-              ))}
-            </Stack>
-          </div>
+          <Box ref={setNodeRef} w={500} display="flex" flexDirection={'row'}>
+            {items.map((book, j) => (
+              <CoverImage
+                id={book.id}
+                key={`${book.id}-${j}`}
+                imageUrl={book.thumbnail}
+              />
+            ))}
+          </Box>
         </SortableContext>
       </Stack>
     </Card>

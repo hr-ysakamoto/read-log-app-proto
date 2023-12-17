@@ -23,7 +23,7 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import {
   CoverImage,
   OrderSelectBox,
@@ -58,7 +58,6 @@ export default function Page(): JSX.Element {
   };
 
   const handleDragStart = (event: DragStartEvent) => {
-    console.log('start!', event);
     const { active } = event;
     const id = active.id.toString();
     setActiveId(id);
@@ -71,13 +70,9 @@ export default function Page(): JSX.Element {
   };
 
   const handleDragOver = (event: DragOverEvent) => {
-    console.log('over!', event);
     const { active, over } = event;
-    //ドラッグしたリソースのid
     const id = active.id?.toString();
-    //ドロップした場所にあったリソースのid
     const overId = over?.id;
-
     if (!overId) {
       return;
     }
@@ -167,9 +162,11 @@ export default function Page(): JSX.Element {
     }
     setActiveId(undefined);
   };
+  const id = useId();
 
   return (
     <DndContext
+      id={id}
       sensors={sensors}
       collisionDetection={closestCorners}
       onDragStart={handleDragStart}
@@ -193,29 +190,14 @@ export default function Page(): JSX.Element {
             </InputGroup>
           </GridItem>
         </Grid>
-        {/* {containers.map((container, i) => (
+        {containers.map(container => (
           <SortableContainer
-            key={`sortable-${i}-${container.id}`}
             id={container.id}
+            key={container.id}
             stateName={container.name}
             items={container.books}
           />
-        ))} */}
-        <SortableContainer
-          id={'container-1'}
-          stateName={'to read'}
-          items={containers.find(x => x.id === 'container-1')?.books ?? []}
-        />
-        <SortableContainer
-          id={'container-2'}
-          stateName={'reading'}
-          items={containers.find(x => x.id === 'container-2')?.books ?? []}
-        />
-        <SortableContainer
-          id={'container-3'}
-          stateName={'read'}
-          items={containers.find(x => x.id === 'container-3')?.books ?? []}
-        />
+        ))}
       </Stack>
       <DragOverlay>
         {activeId ? (

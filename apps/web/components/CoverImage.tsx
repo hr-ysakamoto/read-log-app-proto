@@ -20,9 +20,9 @@ export const CoverImage = ({ id, imageUrl }: CoverImageProps) => {
       {...attributes}
       {...listeners}
     >
-      <Box id={String(id)}>
+      <Box id={id as string} mx={2}>
         <Center bg="gray.100" h="190px" w="140px" color="white">
-          <Image objectFit="cover" src={imageUrl} fit={'fill'} />
+          <Image objectFit="cover" src={imageUrl} fit="fill" />
           <div>test</div>
         </Center>
       </Box>
