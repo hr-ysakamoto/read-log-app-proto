@@ -90,7 +90,6 @@ const main = async (app: FastifyZodInstance) => {
         handler: async (_, res) => {
           const service = new BookService();
           const response = await service.getBooks();
-          console.log({ response });
           res.send(response);
         },
       });

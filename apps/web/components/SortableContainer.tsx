@@ -7,7 +7,7 @@ export interface SortableContainerProps {
   id: string;
   stateName: string;
   items: {
-    id: number;
+    id: string;
     title: string;
     subtitle: string;
     author: string;
@@ -26,16 +26,16 @@ export const SortableContainer = ({
   return (
     <Card variant="outline" size="md">
       <Stack spacing="4" direction={'row'}>
-        <Box w={120} p={2}>
+        <Box minH={190} w={120} p={2}>
           <Text fontSize="md"> {stateName}</Text>
         </Box>
         <SortableContext id={id} items={items} strategy={rectSortingStrategy}>
-          <div ref={setNodeRef}>
+          <div ref={setNodeRef} style={{ width: '100%' }}>
             <Stack spacing="4" direction={'row'}>
               {items.map((book, j) => (
                 <CoverImage
-                  id={`cover-image-${id}-${j}`}
-                  key={`cover-image-${id}-${j}`}
+                  id={book.id}
+                  key={`${book.id}-${j}`}
                   imageUrl={book.thumbnail}
                 />
               ))}

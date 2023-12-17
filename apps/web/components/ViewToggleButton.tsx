@@ -1,7 +1,7 @@
-import React from 'react';
-import { TfiLayoutGrid3Alt } from 'react-icons/tfi';
-import { FaListUl } from 'react-icons/fa6';
 import { IconButton } from '@chakra-ui/react';
+import React from 'react';
+import { FaListUl } from 'react-icons/fa6';
+import { TfiLayoutGrid3Alt } from 'react-icons/tfi';
 
 export type ViewMode = 'grid' | 'list';
 
