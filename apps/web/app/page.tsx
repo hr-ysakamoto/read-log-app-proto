@@ -23,7 +23,7 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import {
   DraggableImage,
   OrderSelectBox,
@@ -32,7 +32,6 @@ import {
 } from '../components';
 import { SortableContainer } from '../components/SortableContainer';
 import { Container } from '../lib';
-import { containers as containerList } from '../lib/mocks';
 import { useBook } from '../lib/useApi';
 import { useStore } from '../lib/zustand';
 
@@ -41,15 +40,33 @@ type DraggingItem = {
   url: string;
 };
 
+const userId = 1 as const; // TODO: 認証系の実装後に置きかえる
+
 export default function Page(): JSX.Element {
   const setDraggingItemId = useStore(state => state.setDraggingItem);
+  const states = [
+    { id: 1, name: '読みたい' },
+    { id: 2, name: '読んでる' },
+    { id: 3, name: '読み終わった' },
+  ];
 
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
-  const [containers, setContainers] = useState<Container[]>(containerList);
+  const [containers, setContainers] = useState<Container[]>([]);
   const [draggingItem, setDraggingItem] = useState<DraggingItem>();
 
   const { data: books } = useBook();
-  console.log({ books });
+
+  const initial: Container[] = states.map(state => ({
+    id: `container-${state.id}`,
+    name: state.name,
+    books:
+      books?.filter(({ readingStateId }) => readingStateId === state.id) || [],
+  }));
+
+  useEffect(() => {
+    if (!books?.length || !!containers.length) return;
+    setContainers(initial);
+  }, [books, initial, containers]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -72,7 +89,7 @@ export default function Page(): JSX.Element {
     if (targetContainer) return undefined;
 
     return containers
-      .find(container => {
+      ?.find(container => {
         return container.books.some(book => book.id === id);
       })
       ?.books.find(book => book.id === id)?.thumbnail;
@@ -87,6 +104,7 @@ export default function Page(): JSX.Element {
   };
 
   const handleDragOver = (event: DragOverEvent) => {
+    // if (!containers) return;
     const { active, over } = event;
     const id = active.id?.toString();
     const overId = over?.id;
@@ -104,8 +122,8 @@ export default function Page(): JSX.Element {
     }
 
     setContainers(prev => {
-      const activeItems = prev.find(x => x.id === activeContainer.id)?.books; // 移動元のコンテナ
-      const overItems = prev.find(x => x.id === overContainer.id)?.books; // 移動先のコンテナ
+      const activeItems = prev?.find(x => x.id === activeContainer.id)?.books; // 移動元のコンテナ
+      const overItems = prev?.find(x => x.id === overContainer.id)?.books; // 移動先のコンテナ
       if (!(activeItems && overItems)) return prev;
       const activeIndex = activeItems.findIndex(x => x.id === id);
       const overIndex = overItems.findIndex(x => x.id === overId);
@@ -205,6 +223,7 @@ export default function Page(): JSX.Element {
             </InputGroup>
           </GridItem>
         </Grid>
+        _
         {containers.map(container => (
           <SortableContainer
             id={container.id}

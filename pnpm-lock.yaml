@@ -197,6 +197,9 @@ importers:
 
   packages/services:
     devDependencies:
+      '@repo/database':
+        specifier: workspace:*
+        version: link:../database
       '@repo/models':
         specifier: workspace:*
         version: link:../models
