@@ -1,10 +1,4 @@
-export interface Book {
-  id: string;
-  title: string;
-  subtitle: string;
-  author: string;
-  thumbnail: string;
-}
+import { Book } from '@repo/models/types';
 
 export interface Container {
   id: string;

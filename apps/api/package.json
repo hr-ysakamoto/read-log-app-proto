@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@repo/models": "workspace:*",
+    "@repo/services": "workspace:*",
     "@types/node": "^20.10.3",
     "@types/uuid": "^9.0.7",
     "fastify-autoload": "^3.13.0",

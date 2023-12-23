@@ -70,6 +70,9 @@ importers:
       '@repo/models':
         specifier: workspace:*
         version: link:../../packages/models
+      '@repo/services':
+        specifier: workspace:*
+        version: link:../../packages/services
       '@types/node':
         specifier: ^20.10.3
         version: 20.10.3
@@ -191,6 +194,12 @@ importers:
       '@types/qs':
         specifier: ^6.9.10
         version: 6.9.10
+
+  packages/services:
+    devDependencies:
+      '@repo/models':
+        specifier: workspace:*
+        version: link:../models
 
   packages/typescript-config: {}
 

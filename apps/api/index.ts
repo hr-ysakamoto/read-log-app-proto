@@ -10,6 +10,7 @@ import {
   UserInputSchema,
   UserOutputSchema,
 } from '@repo/models/types';
+import { BookService } from '@repo/services';
 import fastify, { FastifyBaseLogger, FastifyInstance } from 'fastify';
 import {
   ZodTypeProvider,
@@ -19,7 +20,6 @@ import {
 } from 'fastify-type-provider-zod';
 import _aspida from 'openapi2aspida';
 import cors from './lib/cors';
-import { BookService } from './services';
 
 export type AspidaOptions = Exclude<
   Parameters<typeof _aspida>[0],

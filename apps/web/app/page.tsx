@@ -33,6 +33,7 @@ import {
 import { SortableContainer } from '../components/SortableContainer';
 import { Container } from '../lib';
 import { containers as containerList } from '../lib/mocks';
+import { useBook } from '../lib/useApi';
 import { useStore } from '../lib/zustand';
 
 type DraggingItem = {
@@ -46,6 +47,9 @@ export default function Page(): JSX.Element {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [containers, setContainers] = useState<Container[]>(containerList);
   const [draggingItem, setDraggingItem] = useState<DraggingItem>();
+
+  const { data: books } = useBook();
+  console.log({ books });
 
   const sensors = useSensors(
     useSensor(PointerSensor),

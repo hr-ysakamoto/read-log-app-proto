@@ -1,6 +1,6 @@
 import { Box, Card, Stack, Text } from '@chakra-ui/react';
+import { Book } from '@repo/models/types';
 import { DraggableImage } from '.';
-import { Book } from '../lib';
 import { SortableRowStack } from './SortableRowStack';
 
 export interface SortableContainerProps {

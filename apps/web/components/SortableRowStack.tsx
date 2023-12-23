@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { Book } from '@repo/models/types';
 import React from 'react';
-import { Book } from '../lib';
 
 export interface SortableRowStackProps {
   id: string;
