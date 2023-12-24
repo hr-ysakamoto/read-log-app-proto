@@ -2,10 +2,10 @@ import { z } from 'zod';
 import { ToZod } from '../lib/zod';
 
 export type UserInput = {
-  userId: string;
+  userId: number;
 };
 export const UserInputSchema = z.object<ToZod<UserInput>>({
-  userId: z.string().regex(/\d+/),
+  userId: z.number(),
 });
 export type UserOutput = {
   userName: string;

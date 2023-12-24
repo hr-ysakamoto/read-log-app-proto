@@ -9,7 +9,7 @@ export function useUser(): {
   isError: boolean;
   mutate: KeyedMutator<{ userName: string }>;
 } {
-  const query = { userId: '1' };
+  const query = { userId: 1 };
   const { data, error, isLoading, mutate } = useAspidaSWR(api.user, {
     query,
   });
@@ -21,13 +21,13 @@ export function useUser(): {
   };
 }
 
-export function useBook(): {
+export function useBook(userId: number): {
   data: Book[] | undefined;
   isLoading: boolean;
   isError: boolean;
   mutate: KeyedMutator<GetBookOutput>;
 } {
-  const query = { userId: '1' };
+  const query = { userId: String(userId) };
   const { data, error, isLoading, mutate } = useAspidaSWR(api.books, {
     query,
   });

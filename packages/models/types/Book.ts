@@ -18,11 +18,11 @@ export type Book = {
 };
 
 export type GetBookInput = {
-  userId: string;
+  userId: number;
 };
 
-export const GetBookInputSchema = z.object<ToZod<GetBookInput>>({
-  userId: z.string().regex(/\d+/),
+export const GetBookInputSchema = z.object({
+  userId: z.string().transform(val => Number(val)),
 });
 
 export type GetBookOutput = {

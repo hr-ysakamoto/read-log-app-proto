@@ -54,7 +54,7 @@ export default function Page(): JSX.Element {
   const [containers, setContainers] = useState<Container[]>([]);
   const [draggingItem, setDraggingItem] = useState<DraggingItem>();
 
-  const { data: books } = useBook();
+  const { data: books } = useBook(userId);
 
   const initial: Container[] = states.map(state => ({
     id: `container-${state.id}`,

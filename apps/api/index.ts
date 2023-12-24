@@ -87,9 +87,9 @@ const main = async (app: FastifyZodInstance) => {
             200: GetBookOutputSchema,
           },
         },
-        handler: async (_, res) => {
+        handler: async (request, res) => {
           const service = new BookService();
-          const response = await service.getBooks();
+          const response = await service.getBooks({ ...request.query });
           res.send(response);
         },
       });
